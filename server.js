@@ -16,16 +16,19 @@ const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 app.post('/generate-story', async (req, res) => {
   const { prompt } = req.body;
-
+  console.log("prompt: ", prompt)
   try {
     const response = await axios.post(
       'https://api.openai.com/v1/engines/text-davinci-003/completions',
       {
         prompt: `${prompt}\n\nGenerated Story:`,
-        max_tokens: 500,
+        max_tokens: 1000,
         n: 1,
         stop: null,
-        temperature: 0.9,
+        temperature: 0.3,
+        presence_penalty: 1,
+        frequency_penalty: 0,
+        echo: true,
       },
       {
         headers: {
@@ -34,7 +37,7 @@ app.post('/generate-story', async (req, res) => {
         },
       }
     );
-
+console.log("Checking this data: ", response.data.choices)
     const story = response.data.choices[0].text.trim();
     res.json({ story });
   } catch (error) {
