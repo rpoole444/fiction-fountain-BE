@@ -5,20 +5,13 @@ const axios = require("axios");
 // import openaiRouter from "./openaiController"
 
 dotenv.config();
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
 
 const app = express();
-const allowedOrigins = ["http://localhost:3000"];
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-};
-
-app.use(cors(corsOptions));
 app.use(express.json());
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
@@ -93,7 +86,6 @@ app.post("/generate-image", async (req, res) => {
 });
 
 app.use((req, res, next) => {
-  console.log(`${req.method} ${req.path}`);
   next();
 });
 
