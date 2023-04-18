@@ -5,13 +5,13 @@ const axios = require("axios");
 // import openaiRouter from "./openaiController"
 
 dotenv.config();
+
+const app = express();
 app.use(
   cors({
     origin: "http://localhost:3000",
   })
 );
-
-const app = express();
 app.use(express.json());
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
@@ -51,6 +51,7 @@ app.post("/generate-story", async (req, res) => {
 });
 
 app.post("/generate-image", async (req, res) => {
+  console.log("NOOOW:", req);
   const { prompt } = req.body;
   console.log("prompt: ", prompt);
   if (!prompt) {
@@ -64,7 +65,7 @@ app.post("/generate-image", async (req, res) => {
       {
         prompt: prompt,
         n: 1,
-        size: "800x800",
+        size: "512x512",
         model: "image-alpha-001",
       },
       {
@@ -79,6 +80,7 @@ app.post("/generate-image", async (req, res) => {
     res.json({ image });
   } catch (error) {
     console.error("Error generating image:", error);
+    console.error("Error response data:", error.response.data); // Add this line
     res
       .status(500)
       .json({ error: "Failed to generate image", details: error.message });
