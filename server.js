@@ -60,7 +60,7 @@ app.post("/generate-image", async (req, res) => {
       "https://api.openai.com/v1/images/generations",
       {
         prompt: prompt,
-        n: 1,
+        n: 3,
         size: "512x512",
         model: "image-alpha-001",
       },
