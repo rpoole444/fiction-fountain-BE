@@ -61,8 +61,8 @@ app.post("/generate-image", async (req, res) => {
       {
         prompt: prompt,
         n: 1,
-        size: "512x512",
-        model: "image-alpha-001",
+        size: "1024x1024",
+        model: "dall-e-2",
       },
       {
         headers: {
