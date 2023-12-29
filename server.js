@@ -17,8 +17,9 @@ app.post("/generate-story", async (req, res) => {
   console.log("prompt: ", prompt);
   try {
     const response = await axios.post(
-      "https://api.openai.com/v1/engines/text-davinci-003/completions",
+      "https://api.openai.com/v1/completions",
       {
+        model:"gpt-3.5-turbo-instruct",
         prompt: `${prompt}\n\nGenerated Story:`,
         max_tokens: 1000,
         n: 1,
